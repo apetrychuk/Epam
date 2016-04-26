@@ -16,7 +16,7 @@ public class View {
     }
 
     public void printMessageAndInt(String message, int valuemin,int valuemax){
-        System.out.println(message + "[" + valuemin + "," + valuemax + "]");
+        System.out.println(message + "(" + valuemin + "," + valuemax + ")");
     }
 
     public void printArray(String message, int[] mas, int i){

@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Controller {
     // The Constants
-    public static final int MINIMUM=0;
-    public static final int MAXIMUM=100;
+    public static final int MINIMUM=-20;
+    public static final int MAXIMUM=-10;
     public static final int RAND_MAX=1000;
 
     int min = MINIMUM, max = MAXIMUM;
@@ -21,36 +21,33 @@ public class Controller {
 
     // The Work method
     public void processUser(){
-        int[] history = new int[max];
+        int[] history = new int[max - (min) + 3];
         Scanner sc = new Scanner(System.in);
         int k,i=0;
         int zag = model.random(min,max);
+        System.out.println(zag);
 
         if (!model.flag)
             max = RAND_MAX;
-
-        while( true ){
-            k = inputIntValueWithScanner(sc);
-            history[i] = k;
-            if ((k>zag) && (k<=max)) {
-                view.printMessage(view.VALUE_HIGHER);
-                max = k;
-            }
-            else
-                if ((k<zag) && (k>=min)){
+        k = inputIntValueWithScanner(sc);
+        while( k != zag ) {
+            if (k > min && k < max) {
+                history[i] = k;
+                i++;
+                if (k > zag) {
+                    view.printMessage(view.VALUE_HIGHER);
+                    max = k;
+                } else {
                     view.printMessage(view.VALUE_LESS);
                     min = k;
                 }
-                else
-                    if (k == zag) {
-                        view.printMessage(view.WIN);
-                        break;}
-                    else
-                        view.printMessage(view.VALUE_NOT_IN_RANGE);
-            i++;
+            }else{
+                    view.printMessage(view.VALUE_NOT_IN_RANGE);
+            }
+            k = inputIntValueWithScanner(sc);
         }
-        view.printArray(view.WRONG_INPUT_INT_DATA,history,i);
-
+        view.printMessage(view.WIN);
+        view.printArray(view.WRONG_INPUT_INT_DATA, history, i);
     }
 
     // The Utility methods
